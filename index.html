@@ -5,7 +5,7 @@
 <head>
 <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
 <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <!-- Inline CSS based on choices in "Settings" tab -->
 <style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
 </head>
@@ -40,7 +40,7 @@
        <div class="row">   
        <div class="col-md-12 col-sm-12">
         <span class="glyphicon glyphicon-bullhorn-align-center" aria-hidden="true"></span>
-        <form action="https://zapier.com/hooks/catch/3rq212/" method="post">
+        <form target="_self" onsubmit="" action="javascript: postContactToGoogle()">
          <div class="form-group ">
           <label class="control-label requiredField" for="firstName">
            First Name
@@ -75,6 +75,9 @@
            </button>
           </div>
          </div>
+          <div style="width: 100%; display: block; float: right; padding-top: 15px;">
+            <div class="requestSubmited" style="display:none; text-align: center;">Your name has been added!</div>
+        </div>
        </div>
     </form>
   </div>
@@ -82,5 +85,44 @@
   </div>
 
 </div>
+
+    <script type="text/javascript">
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }"
+
+    function postContactToGoogle(){
+        var firstName = $j('#firstName').val();
+        var lastName = $j('#lastName').val();
+        var email = $j('#email').val();
+        if ((name !== "") && (email !== "") && ((feed !== "") && (validateEmail(email)))) {
+            $j.ajax({
+                url: "https://docs.google.com/13pvS20oy6HS_fHnI3B_6nW4lSO6SMv2c8AyOuHPMJ9Y/formResponse",
+                data: {"entry.1" : firstName, "entry.2" : lastName,  "entry.3" : email},
+                type: "POST",
+                dataType: "xml",
+                statusCode: {
+                    0: function (){
+ 
+                        $j('#firstName').val("");
+                        $j('#lastName').val("");
+                        $j('#email').val("");
+                        //Success message
+                    },
+                    200: function (){
+                        $j('#firstName').val("");
+                        $j('#lastName').val("");
+                        $j('#email').val("");
+                        //Success Message
+                    }
+                }
+            });
+        }
+        else {
+            //Error message
+        }
+    }
+</script>
 </body>
 </html>
