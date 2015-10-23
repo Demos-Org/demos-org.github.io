@@ -81,5 +81,22 @@
   </div>
 
 </div>
+<script>
+    $("#ss-form").submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "https://docs.google.com/forms/d/13pvS20oy6HS_fHnI3B_6nW4lSO6SMv2c8AyOuHPMJ9Y/formResponse",
+            data: $(this).serialize(),
+            type: "POST",
+            dataType: "xml",
+            success: function(data) {
+                console.log('Thank you! Your name has been added.');
+            },
+            error: function(xhr, status, error) {
+                console.log('Submission failed: ' + error);
+            }
+        });
+    });
+</script>
 </body>
 </html>
