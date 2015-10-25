@@ -40,7 +40,7 @@
        <div class="row">   
        <div class="col-md-12 col-sm-12">
         <span class="glyphicon glyphicon-bullhorn-align-center" aria-hidden="true"></span>
-        <form action="https://docs.google.com/forms/d/13pvS20oy6HS_fHnI3B_6nW4lSO6SMv2c8AyOuHPMJ9Y/formResponse" method="POST" id="ss-form" target="_self" onsubmit="">
+        <form action="https://zapier.com/hooks/catch/3rjb69/" method="POST" id="ss-form" target="_self" onsubmit="">
          <div class="form-group ss-form ss-form-entry">
           <label class="control-label requiredField ss-q-item-label" for="entry_782195284">
            First Name
@@ -80,22 +80,33 @@
    </div>
   </div>
 </div>
+<h2>JSON</h2>
+<pre id="result">
+</pre>
 <script>
-    $("#ss-submit").submit(function sendForm(e) {
-        e.preventDefault();
-        $.ajax({
-            url: "https://docs.google.com/forms/d/13pvS20oy6HS_fHnI3B_6nW4lSO6SMv2c8AyOuHPMJ9Y/formResponse",
-            data: $(this).serialize(),
-            type: "POST",
-            dataType: "xml",
-            success: function(data) {
-                console.log('Submission successful');
-            },
-            error: function(xhr, status, error) {
-                console.log('Submission failed: ' + error);
+    $.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
             }
-        });
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
     });
+    return o;
+};
+
+$(function() {
+    $('form').submit(function() {
+        $('#result').text(JSON.stringify($('form').serializeObject()));
+        return false;
+    });
+});
 </script>
 </body>
 </html>
