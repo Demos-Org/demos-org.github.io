@@ -11,7 +11,7 @@
                 dataType: "xml",
                 statusCode: {
                     0: function () {
-                        window.location.replace("http://demos-org.github.io/tryAgain.html");
+                        window.location.replace("http://demos-org.github.io/nameAdded.html");
                     },
                     200: function () {
                         window.location.replace("http://demos-org.github.io/nameAdded.html");
